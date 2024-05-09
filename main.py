@@ -15,12 +15,36 @@ class Game:
 
     def run(self):
         while self.running:
+
+            #Check events
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
 
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RIGHT:
+                        self.player.moving_right = True
+
+                            
+                            
+                    if event.key == pygame.K_LEFT:
+                        self.player.moving_left = True
+
+
+                    if event.key == pygame.K_SPACE:
+                        self.player.jump()
+
+                if event.type == pygame.KEYUP:
+                    if event.key == pygame.K_RIGHT:
+                        self.player.moving_right = False
+                    if event.key == pygame.K_LEFT:
+                        self.player.moving_left = False
+
             #Update
+            
+            self.player.move(self.map)
             self.player.update()
+            self._check_collisions()
 
 
             #Draw Screen
@@ -31,6 +55,24 @@ class Game:
 
     def _load_level(self):
         self.map.load_level(1, self)
+
+        
+    def _check_collisions(self):
+        collisions = pygame.sprite.spritecollideany(self.player, self.map.map_objects)
+        
+        if collisions:
+            if self.player.y_acceleration > 0 and self.player.falling: #aka moving down
+                self.player.rect.bottom = collisions.rect.top  
+                self.player.landed()
+
+            elif self.player.y_acceleration < 0 and self.player.falling: #Hit our head
+                self.player.rect.top = collisions.rect.bottom
+                self.player.y_acceleration = 0
+
+
+            
+        else:
+            self.player.falling = True
 
 game = Game()
 game.run()
