@@ -37,7 +37,7 @@ class Player(pygame.sprite.Sprite):
 
         if self.moving_right and not self.collide("right", map.map_objects):
             self.rect.x += self.settings.player_speed
-        if self.moving_left and not self.collide("left", map.map_objects):
+        if self.moving_left and not self.collide("left", map.map_objects) and self.rect.left > 0:
             self.rect.x -= self.settings.player_speed
 
  
