@@ -20,7 +20,7 @@ class Player(pygame.sprite.Sprite):
 
     def update(self):
         
-        self.rect.y += self.y_acceleration * .01
+        self.rect.y += self.y_acceleration * 1
         if self.falling: 
             self.y_acceleration += 1
         
@@ -44,7 +44,7 @@ class Player(pygame.sprite.Sprite):
     def jump(self):
         if self.jump_count <= 1:
             self.jump_count += 1
-            self.y_acceleration = -200 #Testing
+            self.y_acceleration = -20 #Testing
             self.falling = True
 
     def collide(self, direction, objects):

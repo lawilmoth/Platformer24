@@ -5,6 +5,7 @@ from player import Player
 
 class Game:
     def __init__(self):
+        self.clock = pygame.time.Clock()
         self.settings = Settings()
         self.screen = pygame.display.set_mode((1500,1000))
         pygame.display.set_caption("Platformer")
@@ -45,6 +46,7 @@ class Game:
             self.player.move(self.map)
             self.player.update()
             self._check_collisions()
+            self.scroll()
 
 
             #Draw Screen
@@ -52,6 +54,7 @@ class Game:
             self.map.draw()
             self.player.draw()
             pygame.display.flip()
+            self.clock.tick(60)
 
     def _load_level(self):
         self.map.load_level(1, self)
@@ -73,6 +76,15 @@ class Game:
             
         else:
             self.player.falling = True
+
+
+    def scroll(self):
+        if (self.player.rect.x >= self.screen.get_rect().right - self.settings.scroll_offset)\
+        and self.player.moving_right:
+            self.player.rect.x -=self.settings.player_speed
+            for object in self.map.map_objects:
+                object.rect.x -= self.settings.player_speed
+            
 
 game = Game()
 game.run()
