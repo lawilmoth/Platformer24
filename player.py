@@ -5,6 +5,8 @@ class Player(pygame.sprite.Sprite):
 
     def __init__(self, game) -> None:
         super().__init__()
+        self.respawn_x = 0
+        self.respawn_y = 0
         self.screen = game.screen
         self.settings = game.settings
         self.color = "Red"
@@ -65,3 +67,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.x -= vel
         
         return collided_object
+    
+    def respawn(self):
+        self.rect.topleft = (self.respawn_x, self.respawn_y)
+        self.y_acceleration = 0

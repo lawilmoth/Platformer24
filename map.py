@@ -17,6 +17,7 @@ class Map:
         self.map_objects = pygame.sprite.Group()
 
     def load_level(self, level, game):
+        self.map_objects.empty()
         if level == 1:
             floor1 = Object(game, 0, 700, 400, 10)
             floor2 = Object(game, 500, 600, 400, 10)
