@@ -13,7 +13,7 @@ class Game:
         self._load_level()
         self.player = Player(self)
         self.running = True
-
+        self.vertical_tracker = 0
     def run(self):
         while self.running:
 
@@ -85,6 +85,14 @@ class Game:
             self.player.rect.x -=self.settings.player_speed
             for object in self.map.map_objects:
                 object.rect.x -= self.settings.player_speed
+
+        if self.player.rect.top < self.screen.get_rect().top + self.settings.scroll_offset:
+            self.vertical_tracker += self.player.y_acceleration
+            if self.vertical_tracker < 0:
+                self.vertical_tracker += self.player.y_acceleration
+                self.player.rect.y -= self.player.y_acceleration
+                for object in self.map.map_objects:
+                    object.rect.y -= self.player.y_acceleration
             
     def _check_dead(self):
         if self.player.rect.y > self.screen.get_rect().bottom + 100:

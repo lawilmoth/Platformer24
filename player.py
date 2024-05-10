@@ -6,11 +6,11 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, game) -> None:
         super().__init__()
         self.respawn_x = 0
-        self.respawn_y = 0
+        self.respawn_y = 300
         self.screen = game.screen
         self.settings = game.settings
         self.color = "Red"
-        self.rect = pygame.Rect(0,0,10,30)
+        self.rect = pygame.Rect(0,300,10,30)
         self.y_acceleration = 0
         self.falling = True
         self.moving_left = self.moving_right = False
@@ -22,7 +22,7 @@ class Player(pygame.sprite.Sprite):
 
     def update(self):
         
-        self.rect.y += self.y_acceleration * 1
+        self.rect.y += self.y_acceleration
         if self.falling: 
             self.y_acceleration += 1
         
