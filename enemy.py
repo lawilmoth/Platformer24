@@ -8,6 +8,8 @@ class Enemy(Player):
         self.y = y
         self.color = "Red"
         self.rect.topleft = (x, y)
+        self.moving_left = True
+        self.speed = 1
         
 
     

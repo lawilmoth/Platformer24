@@ -50,7 +50,10 @@ class Game:
             self.player.move(self.map)
             self.player.update(self.map)
 
+
+
             for enemy in self.enemies.sprites():
+                enemy.move(self.map)
                 enemy.update(self.map)
                 
             self.scroll()

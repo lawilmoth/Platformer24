@@ -16,6 +16,7 @@ class Player(pygame.sprite.Sprite):
         self.falling = True
         self.moving_left = self.moving_right = False
         self.jump_count = 0
+        self.speed = self.settings.player_speed
     
     def draw(self):
         pygame.draw.rect(self.screen, self.color, self.rect)
@@ -41,9 +42,9 @@ class Player(pygame.sprite.Sprite):
     def move(self, map):
 
         if self.moving_right and not self.collide("right", map.map_objects):
-            self.rect.x += self.settings.player_speed
+            self.rect.x += self.speed
         if self.moving_left and not self.collide("left", map.map_objects) and self.rect.left > 0:
-            self.rect.x -= self.settings.player_speed
+            self.rect.x -= self.speed
 
  
     def jump(self):
@@ -54,10 +55,10 @@ class Player(pygame.sprite.Sprite):
 
     def collide(self, direction, objects):
         if direction == "right":
-            vel = self.settings.player_speed
+            vel = self.speed
 
         elif direction == "left":
-            vel = -self.settings.player_speed
+            vel = -self.speed
 
         self.rect.x += vel
         
