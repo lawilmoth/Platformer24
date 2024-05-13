@@ -9,8 +9,9 @@ class Player(pygame.sprite.Sprite):
         self.respawn_y = 300
         self.screen = game.screen
         self.settings = game.settings
-        self.color = "Red"
-        self.rect = pygame.Rect(0,300,10,30)
+        self.color = "Blue"
+        self.rect = pygame.Rect(0,0,self.settings.player_width,30)
+        self.rect.topleft = (0, 500)
         self.y_acceleration = 0
         self.falling = True
         self.moving_left = self.moving_right = False
@@ -20,11 +21,13 @@ class Player(pygame.sprite.Sprite):
         pygame.draw.rect(self.screen, self.color, self.rect)
         #Change to blit if you want to use an image
 
-    def update(self):
+    def update(self, map):
         
-        self.rect.y += self.y_acceleration
-        if self.falling: 
+        if self.falling:
+            self.rect.y += self.y_acceleration
+
             self.y_acceleration += 1
+        self._check_collisions(map)
         
         
 
@@ -52,7 +55,7 @@ class Player(pygame.sprite.Sprite):
     def collide(self, direction, objects):
         if direction == "right":
             vel = self.settings.player_speed
-            print(direction)
+
         elif direction == "left":
             vel = -self.settings.player_speed
 
@@ -68,6 +71,24 @@ class Player(pygame.sprite.Sprite):
         
         return collided_object
     
-    def respawn(self):
+    def respawn(self, game):
         self.rect.topleft = (self.respawn_x, self.respawn_y)
         self.y_acceleration = 0
+        self.jump_count = 0
+        game.vertical_tracker = 0
+
+
+    def _check_collisions(self, map):
+        collisions = pygame.sprite.spritecollideany(self, map.map_objects)
+        print(collisions)
+        if collisions:
+            if self.y_acceleration > 0 and self.falling: #aka moving down
+                self.rect.bottom = collisions.rect.top  
+                self.landed()          
+
+            elif self.y_acceleration < 0 and self.falling: #Hit our head
+                self.rect.top = collisions.rect.bottom
+                self.y_acceleration = 0
+            
+        else:
+            self.falling = True
