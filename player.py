@@ -6,7 +6,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, game) -> None:
         super().__init__()
         self.respawn_x = 0
-        self.respawn_y = 300
+        self.respawn_y = 500
         self.screen = game.screen
         self.settings = game.settings
         self.color = "Blue"
@@ -77,11 +77,12 @@ class Player(pygame.sprite.Sprite):
         self.y_acceleration = 0
         self.jump_count = 0
         game.vertical_tracker = 0
+        
 
 
     def _check_collisions(self, map):
         collisions = pygame.sprite.spritecollideany(self, map.map_objects)
-        print(collisions)
+        
         if collisions:
             if self.y_acceleration > 0 and self.falling: #aka moving down
                 self.rect.bottom = collisions.rect.top  

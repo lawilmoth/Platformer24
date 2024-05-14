@@ -21,6 +21,8 @@ class Map:
 
     def load_level(self, level, game, offset=0):
         self.map_objects.empty()
+        game.enemies.empty()
+        game.check_points.empty()
         if level == 1:
 
             floor2 = Object(game, 500, 600, 400, 10)
@@ -33,13 +35,19 @@ class Map:
             self.map_objects.add(Object(game,2000, 50))
             self.map_objects.add(Object(game,1800, 300))
             self.map_objects.add(Object(game, 3000, 800, 500))
+            self.map_objects.add(Object(game, 4000, 400, 500))
+
+            game.check_points.add(Flag(game, 5000, 500, 500))
 
             enemy = Enemy(game, 200, 300)
             game.enemies.add(enemy)
+
+        if level == 2:
+            self.map_objects.add(Object(game, 0, 900, 900, 100))
             
 
-            for object in self.map_objects.sprites():
-                object.rect.x += offset
+        for object in self.map_objects.sprites():
+            object.rect.x += offset
             
             
 
@@ -47,3 +55,12 @@ class Map:
     def draw(self):
         for object in self.map_objects:
             object.draw()
+        
+
+
+
+class Flag(Object):
+    def __init__(self, game, x, y, width=30, height=30, type = "end_level"):
+        super().__init__(game, x, y, width, height)
+        self.color = "purple"
+        self.type = type
