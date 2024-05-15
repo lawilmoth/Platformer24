@@ -5,6 +5,7 @@ from player import Player
 import time 
 class Game:
     def __init__(self):
+        self.tries = 1
         self.clock = pygame.time.Clock()
         self.settings = Settings()
         self.screen = pygame.display.set_mode((1500,1000))
@@ -56,8 +57,8 @@ class Game:
 
 
             for enemy in self.enemies.sprites():
+                enemy.update(self.map, self)
                 enemy.move(self.map)
-                enemy.update(self.map)
                 
             self.scroll()
             
@@ -116,7 +117,7 @@ class Game:
         if self.player.rect.y > self.screen.get_rect().bottom + 100 or collisions:
             
             self.player.respawn(self)
-            self.map.load_level(1, self)
+            self.map.load_level(self.current_level, self)
             time.sleep(0.5)
             
     def _check_level_clear(self):

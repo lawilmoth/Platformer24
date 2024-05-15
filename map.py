@@ -41,6 +41,18 @@ class Map:
 
             enemy = Enemy(game, 200, 300)
             game.enemies.add(enemy)
+            enemy = Enemy(game, 4400, 300)
+            game.enemies.add(enemy)
+            enemy = Enemy(game, 4200, 300)
+            game.enemies.add(enemy)
+            enemy = Enemy(game, 4300, 300)
+            game.enemies.add(enemy)
+            enemy = Enemy(game, 3400, 300)
+            game.enemies.add(enemy)
+            enemy = Enemy(game, 3200, 300)
+            game.enemies.add(enemy)
+            enemy = Enemy(game, 3300, 300)
+            game.enemies.add(enemy)
 
         if level == 2:
             self.map_objects.add(Object(game, 0, 900, 900, 100))
